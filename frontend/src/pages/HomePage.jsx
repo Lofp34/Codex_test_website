@@ -16,87 +16,93 @@ import { usePageTitle } from '../hooks/usePageTitle'
 import { StructuredData } from '../components/StructuredData'
 import { HeroMotionVisual } from '../components/HeroMotionVisual'
 
+const heroHighlights = [
+  'Format hybride : distanciel + présentiel',
+  'Éligible OPCO / Qualiopi',
+  'ROI suivi 30-90 jours',
+]
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': ['Organization', 'LocalBusiness'],
+      '@id': 'https://laurent-serre.fr#organization',
+      name: 'Laurent Serre Coaching intensif à la vente',
+      url: 'https://laurent-serre.fr',
+      telephone: contactInfo.phone,
+      email: contactInfo.email,
+      areaServed: [
+        { '@type': 'City', name: 'Montpellier' },
+        { '@type': 'City', name: 'Paris' },
+        { '@type': 'State', name: 'Occitanie' },
+        { '@type': 'State', name: 'Île-de-France' },
+      ],
+      address: [
+        {
+          '@type': 'PostalAddress',
+          streetAddress: '120 Rue Raymond Recouly',
+          addressLocality: 'Montpellier',
+          postalCode: '34000',
+          addressCountry: 'FR',
+        },
+        {
+          '@type': 'PostalAddress',
+          streetAddress: '40 Rue du Louvre',
+          addressLocality: 'Paris',
+          postalCode: '75001',
+          addressCountry: 'FR',
+        },
+      ],
+      sameAs: [
+        'https://www.linkedin.com/in/laurentserre',
+        'https://www.youtube.com/@laurentserre',
+      ],
+    },
+    {
+      '@type': 'Service',
+      name: 'Coaching commercial intensif',
+      areaServed: ['Montpellier', 'Paris', 'Occitanie', 'Île-de-France'],
+      provider: { '@id': 'https://laurent-serre.fr#organization' },
+      serviceType: 'Coaching vente B2B',
+      description:
+        "Coaching intensif hybride pour les PME B2B qui souhaitent accélérer leurs ventes en 1 à 3 mois.",
+      offers: offers.map((offer) => ({
+        '@type': 'Offer',
+        name: offer.title,
+        price: offer.priceValue ? offer.priceValue.toString() : undefined,
+        priceCurrency: 'EUR',
+        description: offer.description,
+      })),
+    },
+    {
+      '@type': 'Product',
+      name: 'Programme Sprint 1 mois',
+      description:
+        "Bootcamp de vente hybride : 3 sessions distancielles + 1 journée présentielle + suivi 30 jours.",
+      offers: {
+        '@type': 'Offer',
+        price: offers.find((offer) => offer.slug === 'sprint')?.priceValue?.toString() || '5000',
+        priceCurrency: 'EUR',
+        eligibleRegion: ['Montpellier', 'Paris'],
+      },
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    },
+  ],
+}
+
 export default function HomePage() {
   usePageTitle('Accueil')
-
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': ['Organization', 'LocalBusiness'],
-        '@id': 'https://laurent-serre.fr#organization',
-        name: 'Laurent Serre Coaching intensif à la vente',
-        url: 'https://laurent-serre.fr',
-        telephone: contactInfo.phone,
-        email: contactInfo.email,
-        areaServed: [
-          { '@type': 'City', name: 'Montpellier' },
-          { '@type': 'City', name: 'Paris' },
-          { '@type': 'State', name: 'Occitanie' },
-          { '@type': 'State', name: 'Île-de-France' },
-        ],
-        address: [
-          {
-            '@type': 'PostalAddress',
-            streetAddress: '120 Rue Raymond Recouly',
-            addressLocality: 'Montpellier',
-            postalCode: '34000',
-            addressCountry: 'FR',
-          },
-          {
-            '@type': 'PostalAddress',
-            streetAddress: '40 Rue du Louvre',
-            addressLocality: 'Paris',
-            postalCode: '75001',
-            addressCountry: 'FR',
-          },
-        ],
-        sameAs: [
-          'https://www.linkedin.com/in/laurentserre',
-          'https://www.youtube.com/@laurentserre',
-        ],
-      },
-      {
-        '@type': 'Service',
-        name: 'Coaching commercial intensif',
-        areaServed: ['Montpellier', 'Paris', 'Occitanie', 'Île-de-France'],
-        provider: { '@id': 'https://laurent-serre.fr#organization' },
-        serviceType: 'Coaching vente B2B',
-        description:
-          "Coaching intensif hybride pour les PME B2B qui souhaitent accélérer leurs ventes en 1 à 3 mois.",
-        offers: offers.map((offer) => ({
-          '@type': 'Offer',
-          name: offer.title,
-          price: offer.priceValue ? offer.priceValue.toString() : undefined,
-          priceCurrency: 'EUR',
-          description: offer.description,
-        })),
-      },
-      {
-        '@type': 'Product',
-        name: 'Programme Sprint 1 mois',
-        description:
-          "Bootcamp de vente hybride : 3 sessions distancielles + 1 journée présentielle + suivi 30 jours.",
-        offers: {
-          '@type': 'Offer',
-          price: offers.find((offer) => offer.slug === 'sprint')?.priceValue?.toString() || '5000',
-          priceCurrency: 'EUR',
-          eligibleRegion: ['Montpellier', 'Paris'],
-        },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((faq) => ({
-          '@type': 'Question',
-          name: faq.question,
-          acceptedAnswer: {
-            '@type': 'Answer',
-            text: faq.answer,
-          },
-        })),
-      },
-    ],
-  }
 
   return (
     <div className="page home-page">
@@ -127,9 +133,9 @@ export default function HomePage() {
               </a>
             </div>
             <ul className="hero-benefits">
-              <li>Format hybride : distanciel + présentiel</li>
-              <li>Éligible OPCO / Qualiopi</li>
-              <li>ROI suivi 30-90 jours</li>
+              {heroHighlights.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
             </ul>
           </Motion.div>
           <Motion.div
@@ -156,7 +162,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="section" aria-labelledby="preuve-roi">
+      <section className="section" aria-labelledby="preuve-roi" id="preuve-roi">
         <div className="container">
           <div className="section-head">
             <h2 id="preuve-roi">Preuves & ROI</h2>

@@ -262,10 +262,16 @@
   color: var(--color-text-muted);
 }
 
+.hero-benefits li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
 .hero-benefits li::before {
   content: '✔';
   color: var(--color-primary);
-  margin-right: 0.35rem;
+  font-weight: 700;
 }
 
 .hero-card {
@@ -365,6 +371,7 @@
 
 .section {
   padding: 4rem 0;
+  scroll-margin-top: 96px;
 }
 
 .section.muted {

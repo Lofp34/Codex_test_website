@@ -22,3 +22,14 @@ Une première implémentation front-end est disponible dans [`frontend/`](fronte
 
 Consultez [`frontend/README.md`](frontend/README.md) pour les instructions d'installation et de démarrage.
 
+## Résolution des conflits & maintenance
+
+Lorsque des conflits Git surviennent (comme sur `README.md`, `package.json`, `package-lock.json`, `src/App.css` ou `src/pages/HomePage.jsx`), appliquez la démarche suivante :
+
+1. **Identifier la source** : ouvrez les fichiers concernés et repérez les sections `<<<<<<<` / `=======` / `>>>>>>>` générées par Git.
+2. **Comparer les intentions** : confrontez les apports des deux branches (ex. mise à jour de dépendances vs. ajustements CSS) afin de conserver la combinaison qui respecte la dernière version de la maquette et de la documentation.
+3. **Harmoniser les dépendances** : réalignez `package.json` et regénérez le `package-lock.json` via `npm install` pour garantir un ensemble cohérent (React 18, Framer Motion, React Router 7, ESLint 9).
+4. **Recompiler et tester** : lancez `npm run lint` puis `npm run build` pour vérifier qu'aucune régression n'a été introduite.
+
+Après validation, commitez les fichiers nettoyés et poussez la branche. Cette routine évite les résolutions approximatives et garantit un historique lisible.
+
