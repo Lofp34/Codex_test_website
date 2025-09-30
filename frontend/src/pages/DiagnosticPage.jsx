@@ -42,6 +42,24 @@ const steps = [
   },
 ]
 
+const fieldLabels = {
+  sector: "Secteur d'activité",
+  revenue: "Chiffre d'affaires",
+  teamSize: "Taille de l'équipe commerciale",
+  location: 'Lieu souhaité',
+  objectives: 'Objectifs sur 90 jours',
+  blockers: 'Freins identifiés',
+  timeline: 'Horizon de mise en place',
+  financing: 'Financement / OPCO',
+  decisionTime: 'Délai de décision',
+  notes: 'Notes complémentaires',
+  name: 'Nom et prénom',
+  role: 'Fonction',
+  email: 'Email',
+  phone: 'Téléphone',
+  consent: 'Consentement RGPD',
+}
+
 export default function DiagnosticPage() {
   usePageTitle('Diagnostic gratuit')
   const [stepIndex, setStepIndex] = useState(0)
@@ -115,7 +133,7 @@ export default function DiagnosticPage() {
             <dl>
               {Object.entries(formData).map(([field, value]) => (
                 <div key={field}>
-                  <dt>{field}</dt>
+                  <dt>{fieldLabels[field] ?? field}</dt>
                   <dd>{typeof value === 'boolean' ? (value ? 'Oui' : 'Non') : value || '—'}</dd>
                 </div>
               ))}

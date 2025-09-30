@@ -113,10 +113,13 @@ export default function HomePage() {
               <Link className="button primary" to="/diagnostic">
                 Demander un diagnostic gratuit
               </Link>
-              <a className="button ghost" href="#programme">
+              <a className="button ghost" href="/documents/programme-ls.pdf" download>
                 Télécharger le programme
               </a>
             </div>
+            <a className="hero-inline-link" href="#programme">
+              Voir le programme en détail
+            </a>
             <ul className="hero-benefits">
               <li>Format hybride : distanciel + présentiel</li>
               <li>Éligible OPCO / Qualiopi</li>
